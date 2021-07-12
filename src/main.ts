@@ -2,9 +2,7 @@
 
 import { from, Observable } from 'rxjs';
 
-// import { IncomingMessage, request, RequestOptions } from 'http';
 import { ClientRequest, IncomingMessage } from 'http';
-// import { request, RequestOptions } from 'https';
 
 import { IHttpJsonClient } from 'thaw-types';
 
@@ -20,26 +18,18 @@ function httpRequestAsPromise(
 ): Promise<string> {
 	const method = typeof methodParam !== 'undefined' ? methodParam : 'GET';
 	const isMethodThatSendsBody = ['POST', 'PUT', 'PATCH'].indexOf(method) >= 0;
-	// const options: RequestOptions = {
-	// 	method
-	// };
 	let bodyAsString = '';
 	let contentLength = NaN;
 
 	if (isMethodThatSendsBody && typeof body !== 'undefined') {
 		bodyAsString = JSON.stringify(body);
 		contentLength = Buffer.byteLength(bodyAsString);
-		// options.headers = {
-		// 	'Content-Type': 'application/json',
-		// 	'Content-Length': Buffer.byteLength(bodyAsString)
-		// };
 	}
 
 	return new Promise(
 		(resolve: (result: string) => void, reject: (error: Error) => void) => {
 			let request: ClientRequest;
 			const callback = (res: IncomingMessage) => {
-				// Returns: <http.ClientRequest>
 				const { statusCode, statusMessage } = res;
 				// const contentType = res.headers['content-type'];
 				let error;
@@ -82,15 +72,6 @@ function httpRequestAsPromise(
 
 				res.on('end', () => {
 					resolve(rawData);
-					// try {
-					// 	const parsedData = rawData;
-
-					// 	console.log(parsedData);
-					// 	resolve(parsedData);
-					// } catch (error) {
-					// 	console.error(error.message);
-					// 	reject(error);
-					// }
 				});
 			};
 
@@ -120,13 +101,6 @@ function httpRequestAsPromise(
 			});
 
 			if (isMethodThatSendsBody && typeof body !== 'undefined') {
-				// Write data to request body
-
-				// body is e.g.:
-				// const body = querystring.stringify({
-				// 	'msg': 'Hello World!'
-				// });
-
 				request.write(bodyAsString);
 			}
 
@@ -150,7 +124,8 @@ function parseJSON<T>(s: string): T {
 
 	const castResult = parseResult as T;
 
-	if (typeof parseResult === 'undefined') {
+	// if (!(castResult instanceof T)) { ... } ?
+	if (typeof castResult === 'undefined') {
 		throw new Error('JSON parse: cast error');
 	}
 

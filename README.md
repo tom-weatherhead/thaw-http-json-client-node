@@ -3,6 +3,15 @@ JSON Web service client built on Node.js HTTP
 
 Obligatory BadgeFest:
 
+[![codeclimate][codeclimate-badge-image]][codeclimate-url]
+[![git][git-badge-image]][git-url]
+[![github][github-badge-image]][github-url]
+[![npm][npm-badge-image]][npm-url]
+[![packagephobia][packagephobia-badge-image]][packagephobia-url]
+[![terminal][terminal-badge-image]][terminal-url]
+[![travis][travis-badge-image]][travis-url]
+[![typescript][typescript-badge-image]][typescript-url]
+
 [![build status][build-status-badge-image]][build-status-url]
 [![npm version][npm-version-badge-image]][npm-version-url]
 [![latest tag][latest-tag-badge-image]][latest-tag-url]
@@ -26,6 +35,23 @@ Obligatory BadgeFest:
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
+
+[codeclimate-badge-image]: https://badgen.net/badge/icon/codeclimate?icon=codeclimate&label
+[codeclimate-url]: https://codeclimate.com
+[git-badge-image]: https://badgen.net/badge/icon/git?icon=git&label
+[git-url]: https://git-scm.com
+[github-badge-image]: https://badgen.net/badge/icon/github?icon=github&label
+[github-url]: https://github.com
+[npm-badge-image]: https://badgen.net/badge/icon/npm?icon=npm&label
+[npm-url]: https://npmjs.com
+[packagephobia-badge-image]: https://badgen.net/badge/icon/packagephobia?icon=packagephobia&label
+[packagephobia-url]: https://packagephobia.com/
+[terminal-badge-image]: https://badgen.net/badge/icon/terminal?icon=terminal&label
+[terminal-url]: https://en.wikipedia.org/wiki/History_of_Unix
+[travis-badge-image]: https://badgen.net/badge/icon/travis?icon=travis&label
+[travis-url]: https://travis-ci.com
+[typescript-badge-image]: https://badgen.net/badge/icon/typescript?icon=typescript&label
+[typescript-url]: https://www.typescriptlang.org
 
 [build-status-badge-image]: https://secure.travis-ci.org/tom-weatherhead/thaw-http-json-client-node.svg
 [build-status-url]: https://travis-ci.org/tom-weatherhead/thaw-http-json-client-node
