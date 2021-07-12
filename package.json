@@ -1,6 +1,6 @@
 {
 	"name": "thaw-http-json-client-node",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"description": "JSON Web service client built on Node.js HTTP",
 	"keywords": [],
 	"private": false,

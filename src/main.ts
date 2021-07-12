@@ -2,11 +2,16 @@
 
 import { from, Observable } from 'rxjs';
 
-import { IncomingMessage, request, RequestOptions } from 'http';
+// import { IncomingMessage, request, RequestOptions } from 'http';
+import { ClientRequest, IncomingMessage } from 'http';
+// import { request, RequestOptions } from 'https';
 
 import { IHttpJsonClient } from 'thaw-types';
 
-// JSON fetching example from https://nodejs.org/api/http.html
+import { createHttpRequest } from './create-http-request';
+import { createHttpsRequest } from './create-https-request';
+
+// Based on the JSON fetching example from https://nodejs.org/api/http.html
 
 function httpRequestAsPromise(
 	url: string,
@@ -15,22 +20,25 @@ function httpRequestAsPromise(
 ): Promise<string> {
 	const method = typeof methodParam !== 'undefined' ? methodParam : 'GET';
 	const isMethodThatSendsBody = ['POST', 'PUT', 'PATCH'].indexOf(method) >= 0;
-	const options: RequestOptions = {
-		method
-	};
+	// const options: RequestOptions = {
+	// 	method
+	// };
 	let bodyAsString = '';
+	let contentLength = NaN;
 
 	if (isMethodThatSendsBody && typeof body !== 'undefined') {
 		bodyAsString = JSON.stringify(body);
-		options.headers = {
-			'Content-Type': 'application/json',
-			'Content-Length': Buffer.byteLength(bodyAsString)
-		};
+		contentLength = Buffer.byteLength(bodyAsString);
+		// options.headers = {
+		// 	'Content-Type': 'application/json',
+		// 	'Content-Length': Buffer.byteLength(bodyAsString)
+		// };
 	}
 
 	return new Promise(
 		(resolve: (result: string) => void, reject: (error: Error) => void) => {
-			const req = request(url, options, (res: IncomingMessage) => {
+			let request: ClientRequest;
+			const callback = (res: IncomingMessage) => {
 				// Returns: <http.ClientRequest>
 				const { statusCode, statusMessage } = res;
 				// const contentType = res.headers['content-type'];
@@ -84,7 +92,29 @@ function httpRequestAsPromise(
 					// 	reject(error);
 					// }
 				});
-			}).on('error', (error: Error) => {
+			};
+
+			if (url.startsWith('http://')) {
+				request = createHttpRequest(
+					url,
+					method,
+					contentLength,
+					callback
+				);
+			} else if (url.startsWith('https://')) {
+				request = createHttpsRequest(
+					url,
+					method,
+					contentLength,
+					callback
+				);
+			} else {
+				throw new Error(
+					`thaw-http-json-client-node: Unrecognized protocol in url: ${url}`
+				);
+			}
+
+			request.on('error', (error: Error) => {
 				console.error(`Got error: ${error.message}`);
 				reject(error);
 			});
@@ -97,10 +127,10 @@ function httpRequestAsPromise(
 				// 	'msg': 'Hello World!'
 				// });
 
-				req.write(bodyAsString);
+				request.write(bodyAsString);
 			}
 
-			req.end();
+			request.end();
 		}
 	);
 }
