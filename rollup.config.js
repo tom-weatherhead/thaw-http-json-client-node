@@ -17,6 +17,7 @@ export default {
 		{
 			file: 'dist/thaw-http-json-client-node.esm.js',
 			format: 'es',
+			esModule: true,
 			compact: true //,
 			// globals: { http: 'http', https: 'https' }
 		}
