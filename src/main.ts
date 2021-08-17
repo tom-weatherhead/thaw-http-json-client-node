@@ -1,17 +1,13 @@
 // src/main.ts
 
-import { from, Observable } from 'rxjs';
-
 import { ClientRequest, IncomingMessage } from 'http';
+
+import { from, Observable } from 'rxjs';
 
 import { IHttpClient, IHttpJsonClient } from 'thaw-types';
 
 import { createHttpRequest } from './create-http-request';
 import { createHttpsRequest } from './create-https-request';
-
-// export interface IHttpClient {
-// 	get(url: string): Observable<string>;
-// }
 
 // Based on the JSON fetching example from https://nodejs.org/api/http.html
 
